@@ -1,22 +1,9 @@
 import sys
-from PyQt5.QtCore import QUrl, QDateTime, QEventLoop
+from PyQt5.QtCore import QUrl, QDateTime, QEventLoop, Qt
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout
 from PyQt5.QtWebEngineWidgets import QWebEngineView, QWebEnginePage, QWebEngineProfile, QWebEngineSettings
 from PyQt5.QtWebEngineCore import QWebEngineCookieStore
 from PyQt5.QtNetwork import QNetworkCookie
-from PyQt5.QtCore import Qt
-
-class WebBrowser(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("Pinterest Webpage")
-        self.setGeometry(100, 100, 800, 600)
-        
-        # Set window transparency to 50%
-        self.setWindowOpacity(0.85)
-        
-        layout = QVBoxLayout()
-        self.setLayout(layout)
 
 # Request headers
 headers = {
@@ -60,7 +47,7 @@ class WebBrowser(QWidget):
         self.setWindowTitle("Pinterest Webpage")
         self.setGeometry(100, 100, 800, 600)
         
-        self.setWindowOpacity(0.15)
+        self.setWindowOpacity(1)
 
         layout = QVBoxLayout()
         self.setLayout(layout)
@@ -129,6 +116,12 @@ class WebBrowser(QWidget):
                     };
                 }
         """)
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_F1:
+            self.web_view.back()
+        else:
+            super().keyPressEvent(event)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv + ['--disable-features=InstalledApp'])
